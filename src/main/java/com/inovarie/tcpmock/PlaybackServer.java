@@ -9,11 +9,12 @@ public class PlaybackServer {
 	public static void main(String[] args) {
 
 		int portNumber = 5555;
-
+		String recordFile = args[0];
+		
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(portNumber);
-			System.out.println("Server is starting on port " + portNumber + " ...");
+			System.out.println("PlaybackServer is starting on port " + portNumber + " ...");
 		} catch (IOException e) {
 			System.out.println("Error on socket creation!");
 			e.printStackTrace();
@@ -25,7 +26,7 @@ public class PlaybackServer {
 					Socket serverConnectionSocket = serverSocket.accept();
 					System.out.println("Accepting Connection...");
 	
-					new RecordingHandler(serverConnectionSocket).start();
+					new PlaybackHandler(serverConnectionSocket, recordFile).start();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}			

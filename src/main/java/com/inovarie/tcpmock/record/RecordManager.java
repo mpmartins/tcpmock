@@ -1,7 +1,9 @@
 package com.inovarie.tcpmock.record;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
 import lombok.NonNull;
 
 public class RecordManager {
+
+	private static final String FILE_EXTENSION = ".record";
 
 	private static RecordManager instance = null;
 	
@@ -53,9 +57,24 @@ public class RecordManager {
 		currentMessage = null;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void loadRecord(String name) {
+		try {
+			FileInputStream fin = new FileInputStream(name + FILE_EXTENSION);
+			ObjectInputStream ois = new ObjectInputStream(fin);
+			recordedMessages = (List<Message>) ois.readObject();
+			ois.close();
+			fin.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}	
+	}
+	
 	public void saveRecord(String name) {
 		try {
-			FileOutputStream fout = new FileOutputStream(name + ".ser");
+			FileOutputStream fout = new FileOutputStream(name + FILE_EXTENSION);
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(recordedMessages);
 			oos.close();
@@ -64,9 +83,13 @@ public class RecordManager {
 			e.printStackTrace();
 		}	
 	}
-	
+		
+	public List<Message> getRecordedMessages() {
+		return this.recordedMessages;
+	}
+
 	public void printRecord() {
 		System.out.println(recordedMessages);
 	}
-	
+
 }

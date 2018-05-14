@@ -12,11 +12,11 @@ public class Message implements Serializable {
 	private static final long serialVersionUID = 4482188118887320728L;
 
 	private Source source;
-	private List<Integer> message;
+	private List<Integer> bytes;
 	
 	public Message (@NonNull Source source, @NonNull List<Integer> message) {
 		this.source = source;
-		this.message = message;
+		this.bytes = message;
 	}
 	
 }

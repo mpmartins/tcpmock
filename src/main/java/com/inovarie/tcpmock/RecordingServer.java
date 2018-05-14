@@ -13,7 +13,7 @@ public class RecordingServer {
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(portNumber);
-			System.out.println("Server is starting on port " + portNumber + " ...");
+			System.out.println("RecordingServer is starting on port " + portNumber + " ...");
 		} catch (IOException e) {
 			System.out.println("Error on socket creation!");
 			e.printStackTrace();
