@@ -1,26 +1,31 @@
-package com.inovarie.tcpmock;
+package com.inovarie.tcpmock.recording;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
-import com.inovarie.tcpmock.record.RecordManager;
-import com.inovarie.tcpmock.record.Source;
+import com.inovarie.tcpmock.model.RecordManager;
+import com.inovarie.tcpmock.model.Source;
 
 public class RecordingHandler extends Thread {
 
 	Socket serverConnectionSocket;
-	Socket clientConnectionSocket;
+	String clientAddress;
+	int clientPort;
+	String fileName;
 
-	public RecordingHandler(Socket serverConnectionSocket) {
+	public RecordingHandler(Socket serverConnectionSocket, String clientAddress, int clientPort, String fileName) {
 		this.serverConnectionSocket = serverConnectionSocket;
+		this.clientAddress = clientAddress;
+		this.clientPort = clientPort;
+		this.fileName = fileName;
 	}
 
 	public void run() {
 		try {
 
 			System.out.println("Establishing client connection...");
-			clientConnectionSocket = new Socket("localhost", 3306);
+			Socket clientConnectionSocket = new Socket(clientAddress, clientPort);
 
 			RecordManager recordManager = RecordManager.getInstance();
 			recordManager.startRecord();
@@ -40,13 +45,15 @@ public class RecordingHandler extends Thread {
 			serverToClient.start();
 			
 			Scanner userInputScanner = new Scanner(System.in);
-			System.out.println("Type the name of the file and hit enter when you're done recording: ");
-		    String recordName = userInputScanner.nextLine();
+			System.out.println("Press any key to stop recording...");
+		    userInputScanner.nextLine();
 			userInputScanner.close();
 		    
 			recordManager.stopRecord();
 			recordManager.printRecord();
-			recordManager.saveRecord(recordName);
+			recordManager.saveRecord(fileName);
+			
+			clientConnectionSocket.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.inovarie.tcpmock.record;
+package com.inovarie.tcpmock.model;
 
 import java.io.Serializable;
 import java.util.List;

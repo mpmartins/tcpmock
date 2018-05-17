@@ -1,4 +1,4 @@
-package com.inovarie.tcpmock;
+package com.inovarie.tcpmock.playback;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inovarie.tcpmock.record.Message;
-import com.inovarie.tcpmock.record.RecordManager;
+import com.inovarie.tcpmock.model.Message;
+import com.inovarie.tcpmock.model.RecordManager;
 
 public class PlaybackHandler extends Thread {
 

@@ -1,4 +1,4 @@
-package com.inovarie.tcpmock.record;
+package com.inovarie.tcpmock.model;
 
 public enum Source {
 	CLIENT, SERVER

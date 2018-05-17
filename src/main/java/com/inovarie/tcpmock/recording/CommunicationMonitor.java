@@ -1,11 +1,11 @@
-package com.inovarie.tcpmock;
+package com.inovarie.tcpmock.recording;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import com.inovarie.tcpmock.record.RecordManager;
-import com.inovarie.tcpmock.record.Source;
+import com.inovarie.tcpmock.model.RecordManager;
+import com.inovarie.tcpmock.model.Source;
 
 public class CommunicationMonitor implements Runnable {
 
