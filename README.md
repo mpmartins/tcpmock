@@ -1,13 +1,8 @@
 # tcpmock
 
-Main
-        playback: Starts server and replay specified communication file.
-        record: Starts server and record communication.
+## RECORDING
 
-
-shell:>help record
-
-
+```
 NAME
 	record - Starts server and record communication.
 
@@ -34,12 +29,12 @@ OPTIONS
 
 	--detached	
 		[Optional, default = false]
+```
 
 
+## PLAYBACK
 
-shell:>help playback
-
-
+```
 NAME
 	playback - Starts server and replay specified communication file.
 
@@ -58,5 +53,5 @@ OPTIONS
 
 	--detached	
 		[Optional, default = false]
-
+```
 
