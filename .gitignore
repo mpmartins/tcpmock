@@ -4,6 +4,6 @@
 .project
 .settings/
 
-*.record
+/*.record
 *.log
 target/**
