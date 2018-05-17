@@ -1,12 +1,10 @@
-package com.inovarie.tcpmock.server;
+package com.inovarie.tcpmock.playback;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.inovarie.tcpmock.playback.PlaybackHandler;
-
-public class PlaybackServer {
+public class PlaybackServer implements Runnable {
 
 	private int serverPort;
 	private String fileName;
@@ -18,10 +16,10 @@ public class PlaybackServer {
 
 	public static void main(String[] args) {
 		PlaybackServer playbackServer = new PlaybackServer(Integer.parseInt(args[0]), args[1]);
-		playbackServer.start();
+		playbackServer.run();
 	}
 
-	public void start() {
+	public void run() {
 
 		ServerSocket serverSocket = null;
 		try {

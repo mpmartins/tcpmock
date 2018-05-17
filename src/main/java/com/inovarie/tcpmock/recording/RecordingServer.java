@@ -1,12 +1,10 @@
-package com.inovarie.tcpmock.server;
+package com.inovarie.tcpmock.recording;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.inovarie.tcpmock.recording.RecordingHandler;
-
-public class RecordingServer {
+public class RecordingServer implements Runnable {
 
 	private int serverPort;
 	private String clientAddress;
@@ -22,10 +20,10 @@ public class RecordingServer {
 
 	public static void main(String[] args) {
 		RecordingServer recordingServer = new RecordingServer(Integer.parseInt(args[0]), args[1], Integer.parseInt(args[2]), args[3]);
-		recordingServer.start();
+		recordingServer.run();
 	}
 
-	public void start() {
+	public void run() {
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(serverPort);

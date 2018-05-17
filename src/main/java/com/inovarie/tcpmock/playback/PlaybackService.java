@@ -4,15 +4,15 @@ import javax.validation.constraints.NotEmpty;
 
 import org.springframework.stereotype.Service;
 
-import com.inovarie.tcpmock.server.PlaybackServer;
-
 @Service
 public class PlaybackService {
 
-	public String startPlayback(@NotEmpty int serverPort, @NotEmpty String fileName) {
-		PlaybackServer playbackServer = new PlaybackServer(serverPort, fileName);
-		playbackServer.start();
-		return "Playback Server Started.";
+	public void startPlaybackDetached(@NotEmpty int serverPort, @NotEmpty String fileName) {
+		new Thread(new PlaybackServer(serverPort, fileName)).start();
+	}
+
+	public void startPlayback(@NotEmpty int serverPort, @NotEmpty String fileName) {
+		new PlaybackServer(serverPort, fileName).run();
 	}
 
 }

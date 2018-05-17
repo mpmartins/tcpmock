@@ -1,10 +1,12 @@
 package com.inovarie.tcpmock.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +62,8 @@ public class RecordManager {
 	@SuppressWarnings("unchecked")
 	public void loadRecord(String name) {
 		try {
-			FileInputStream fin = new FileInputStream(name + FILE_EXTENSION);
+			URL file = Thread.currentThread().getContextClassLoader().getResource(name + FILE_EXTENSION);
+			FileInputStream fin = new FileInputStream(new File(file.getFile()));
 			ObjectInputStream ois = new ObjectInputStream(fin);
 			recordedMessages = (List<Message>) ois.readObject();
 			ois.close();

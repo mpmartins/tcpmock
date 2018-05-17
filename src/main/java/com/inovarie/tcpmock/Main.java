@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		SpringApplication.run(Main.class, args);
 	}
-	
+
 	private final RecordingService recordingService;
 	private final PlaybackService playbackService;
 
@@ -30,18 +30,34 @@ public class Main {
 	}
 
 	@ShellMethod("Starts server and record communication.")
-	public String record(
+	public void record(
 			@ShellOption int serverPort, 
 			@ShellOption(defaultValue = "localhost") String clientAddress,
-			@ShellOption int clientPort,
-			@ShellOption @NotEmpty String fileName) {
-		return recordingService.startRecording(serverPort, clientAddress, clientPort, fileName);
+			@ShellOption int clientPort, 
+			@ShellOption @NotEmpty String fileName, 
+			@ShellOption Boolean detached) {
+		if (detached == null) {
+			detached = false;
+		}
+		if (detached) {
+			recordingService.startRecordingDetached(serverPort, clientAddress, clientPort, fileName);
+		} else {
+			recordingService.startRecording(serverPort, clientAddress, clientPort, fileName);
+		}
 	}
 
 	@ShellMethod("Starts server and replay specified communication file.")
-	public String playback(
+	public void playback(
 			@ShellOption int serverPort, 
-			@ShellOption @NotEmpty String fileName) {
-		return playbackService.startPlayback(serverPort, fileName);
+			@ShellOption @NotEmpty String fileName,
+			@ShellOption Boolean detached) {
+		if (detached == null) {
+			detached = false;
+		}
+		if (detached) {
+			playbackService.startPlaybackDetached(serverPort, fileName);
+		} else {
+			playbackService.startPlayback(serverPort, fileName);
+		}
 	}
 }
