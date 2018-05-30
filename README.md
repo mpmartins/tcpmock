@@ -51,6 +51,7 @@ OPTIONS
 
 1. Add validations to command line tool.
 2. Use a proper logging framework.
-3. Create interface for recording and playback.
+3. Change saved files format to Json.
+4. Create interface for recording and playback functions.
 4. Possible: create interpreter for different databases protocols to show communication in a more understandable way.
 
