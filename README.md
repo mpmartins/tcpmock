@@ -1,8 +1,9 @@
 # tcpmock
 
-Use Main class to execute following functions:
+## User Manual
+Use com.inovarie.tcpmock.Main class to execute following functions:
 
-## RECORDING
+### RECORDING
 
 ```
 NAME
@@ -32,7 +33,7 @@ OPTIONS
 ```
 
 
-## PLAYBACK
+### PLAYBACK
 
 ```
 NAME
@@ -53,4 +54,11 @@ OPTIONS
 		[File must be in classpath]
 
 ```
+
+## TO-DO
+
+1. Add validations to command line tool.
+2. Use a proper logging framework.
+3. Create interface for recording and playback.
+4. Possible: create interpreter for different databases protocols to show communication in a more understandable way.
 
