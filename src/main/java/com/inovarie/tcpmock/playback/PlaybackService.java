@@ -1,18 +1,22 @@
 package com.inovarie.tcpmock.playback;
 
-import javax.validation.constraints.NotEmpty;
+import com.inovarie.tcpmock.file.RecordFileManager;
+import com.inovarie.tcpmock.model.Record;
 
-import org.springframework.stereotype.Service;
+import lombok.NonNull;
 
-@Service
 public class PlaybackService {
 
-	public void startPlaybackDetached(@NotEmpty int serverPort, @NotEmpty String fileName) {
-		new Thread(new PlaybackServer(serverPort, fileName)).start();
+	public void startPlaybackDetached(int serverPort, @NonNull String fileName) {
+		Record record = RecordFileManager.loadRecord(fileName);
+		System.out.println(record);
+		new Thread(new PlaybackServer(serverPort, record)).start();
 	}
 
-	public void startPlayback(@NotEmpty int serverPort, @NotEmpty String fileName) {
-		new PlaybackServer(serverPort, fileName).run();
+	public void startPlayback(int serverPort, @NonNull String fileName) {
+		Record record = RecordFileManager.loadRecord(fileName);
+		System.out.println(record);
+		new PlaybackServer(serverPort, record).run();
 	}
 
 }

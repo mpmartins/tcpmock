@@ -8,15 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.inovarie.tcpmock.Main;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {Main.class})
 public class RecordingServiceMySQLTest {
 
 	// JDBC driver name and database URL
@@ -27,11 +19,11 @@ public class RecordingServiceMySQLTest {
 	static final String USER = "root";
 	static final String PASS = "1234";
 	
-	@Autowired
 	RecordingService recordingService;
 	
 	@Before
 	public void setUp() throws Exception {
+		
 		//recordingService.startRecordingDetached(5555, "localhost", 3306, "MySQLTest");
 	}
 

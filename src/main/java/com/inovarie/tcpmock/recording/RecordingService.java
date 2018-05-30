@@ -1,20 +1,35 @@
 package com.inovarie.tcpmock.recording;
 
-import javax.validation.constraints.NotEmpty;
+import java.util.Scanner;
 
-import org.springframework.stereotype.Service;
+import com.inovarie.tcpmock.file.RecordFileManager;
+import com.inovarie.tcpmock.model.Record;
 
-@Service
+import lombok.NonNull;
+
 public class RecordingService {
 
-	public void startRecordingDetached(@NotEmpty int serverPort, @NotEmpty String clientAddress, @NotEmpty int clientPort,
-			@NotEmpty String fileName) {
-		new Thread(new RecordingServer(serverPort, clientAddress, clientPort, fileName)).start();
+	public void startRecording(int serverPort, @NonNull String clientAddress, int clientPort,
+			@NonNull String fileName) {
+		
+		Record record = new Record(fileName);
+		
+		RecordingManager recordManager = RecordingManager.getInstance(record);
+		recordManager.startRecord();
+
+		new Thread(new RecordingServer(recordManager, serverPort, clientAddress, clientPort)).start();
+
+		Scanner userInputScanner = new Scanner(System.in);
+		System.out.println("Press any key to stop recording...");
+	    userInputScanner.nextLine();
+		userInputScanner.close();
+	    
+		recordManager.stopRecord();
+		
+		System.out.println(record);
+		
+		RecordFileManager.saveRecord(recordManager.getRecord());
+		
 	}
 	
-	public void startRecording(@NotEmpty int serverPort, @NotEmpty String clientAddress, @NotEmpty int clientPort,
-			@NotEmpty String fileName) {
-		new RecordingServer(serverPort, clientAddress, clientPort, fileName).run();
-	}
-
 }

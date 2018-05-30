@@ -9,15 +9,7 @@ import java.sql.Statement;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.inovarie.tcpmock.Main;
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {Main.class})
 public class PlaybackServiceMySQLTest {
 
 	// JDBC driver name and database URL
@@ -28,11 +20,11 @@ public class PlaybackServiceMySQLTest {
 	static final String USER = "root";
 	static final String PASS = "1234";
 	
-	@Autowired
 	PlaybackService playbackService;
 	
 	@Before
 	public void setUp() throws Exception {
+		playbackService = new PlaybackService();
 		playbackService.startPlaybackDetached(5555, "MySQLTest");
 	}
 

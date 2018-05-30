@@ -6,36 +6,34 @@ import java.net.Socket;
 
 public class RecordingServer implements Runnable {
 
+	private RecordingManager recordManager;
 	private int serverPort;
 	private String clientAddress;
 	private int clientPort;
-	private String fileName;
 
-	public RecordingServer(int serverPort, String clientAddress, int clientPort, String fileName) {
+	public RecordingServer(RecordingManager recordManager, int serverPort, String clientAddress, int clientPort) {
+		this.recordManager = recordManager;
 		this.serverPort = serverPort;
 		this.clientAddress = clientAddress;
 		this.clientPort = clientPort;
-		this.fileName = fileName;
 	}
 
-	public static void main(String[] args) {
-		RecordingServer recordingServer = new RecordingServer(Integer.parseInt(args[0]), args[1], Integer.parseInt(args[2]), args[3]);
-		recordingServer.run();
-	}
 
 	public void run() {
 		ServerSocket serverSocket = null;
 		try {
+			
 			serverSocket = new ServerSocket(serverPort);
 			System.out.println("RecordingServer is starting on port " + serverPort + " ...");
 
-			while (true) {
+			while (RecordingManagerStatus.RECORDING == recordManager.getStatus()) {
 				Socket serverConnectionSocket = serverSocket.accept();
 				System.out.println("Accepting Connection...");
-
-				new RecordingHandler(serverConnectionSocket, clientAddress, clientPort, fileName).start();
+				
+				new RecordingHandler(recordManager, serverConnectionSocket, clientAddress, clientPort).start();
 			}
 
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

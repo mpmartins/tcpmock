@@ -1,63 +1,39 @@
 package com.inovarie.tcpmock;
 
-import javax.validation.constraints.NotEmpty;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
-
 import com.inovarie.tcpmock.playback.PlaybackService;
 import com.inovarie.tcpmock.recording.RecordingService;
 
-@ShellComponent
-@SpringBootApplication
 public class Main {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
-	}
-
-	private final RecordingService recordingService;
-	private final PlaybackService playbackService;
-
-	@Autowired
-	public Main(RecordingService recordingService, PlaybackService playbackService) {
-		this.recordingService = recordingService;
-		this.playbackService = playbackService;
-	}
-
-	@ShellMethod("Starts server and record communication.")
-	public void record(
-			@ShellOption int serverPort, 
-			@ShellOption(defaultValue = "localhost") String clientAddress,
-			@ShellOption int clientPort, 
-			@ShellOption @NotEmpty String fileName, 
-			@ShellOption Boolean detached) {
-		if (detached == null) {
-			detached = false;
+		if (args.length < 1) {
+			printHelp();
 		}
-		if (detached) {
-			recordingService.startRecordingDetached(serverPort, clientAddress, clientPort, fileName);
-		} else {
-			recordingService.startRecording(serverPort, clientAddress, clientPort, fileName);
+
+		if ("record".equals(args[0])) {
+			if (args.length < 5) {
+				printHelp();
+			}
+			RecordingService recordingService = new RecordingService();
+			recordingService.startRecording(Integer.parseInt(args[1]), args[2], Integer.parseInt(args[3]), args[4]);
+		}
+		
+		if ("playback".equals(args[0])) {
+			if (args.length < 3) {
+				printHelp();
+			}
+			PlaybackService playbackService = new PlaybackService();
+			playbackService.startPlayback(Integer.parseInt(args[1]), args[2]);
 		}
 	}
 
-	@ShellMethod("Starts server and replay specified communication file.")
-	public void playback(
-			@ShellOption int serverPort, 
-			@ShellOption @NotEmpty String fileName,
-			@ShellOption Boolean detached) {
-		if (detached == null) {
-			detached = false;
-		}
-		if (detached) {
-			playbackService.startPlaybackDetached(serverPort, fileName);
-		} else {
-			playbackService.startPlayback(serverPort, fileName);
-		}
+	private static void printHelp() {
+		System.out.println("Missing parameters");
+		System.out.println();
+		System.out.println("Select the server mode to start:");
+		System.out.println();
+		System.out.println("record [server-port] [client-address] [client-port] [filename]");
+		System.out.println("playback [server-port] [filename]");
+		System.exit(0);
 	}
 }

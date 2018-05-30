@@ -7,31 +7,27 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.inovarie.tcpmock.model.Connection;
 import com.inovarie.tcpmock.model.Message;
-import com.inovarie.tcpmock.model.RecordManager;
 
 public class PlaybackHandler extends Thread {
 
 	Socket serverConnectionSocket;
-	String recordFile;
+	Connection connection;
 
-	public PlaybackHandler(Socket serverConnectionSocket, String recordFile) {
+	public PlaybackHandler(Socket serverConnectionSocket, Connection connection) {
 		this.serverConnectionSocket = serverConnectionSocket;
-		this.recordFile = recordFile;
+		this.connection = connection;
 	}
 
 	public void run() {
 		try {
 
-			RecordManager recordManager = RecordManager.getInstance();
-			recordManager.loadRecord(this.recordFile);
-			recordManager.printRecord();
-			List<Message> messages = recordManager.getRecordedMessages();
 			
 			InputStream in = serverConnectionSocket.getInputStream();
 			OutputStream out = serverConnectionSocket.getOutputStream();
 			
-			for (Message message : messages) {
+			for (Message message : connection.getMessages()) {
 				List<Integer> bytes = message.getBytes();
 					
 				switch (message.getSource()) {

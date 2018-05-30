@@ -14,9 +14,9 @@ public class Message implements Serializable {
 	private Source source;
 	private List<Integer> bytes;
 	
-	public Message (@NonNull Source source, @NonNull List<Integer> message) {
+	public Message (@NonNull Source source, @NonNull List<Integer> bytes) {
 		this.source = source;
-		this.bytes = message;
+		this.bytes = bytes;
 	}
 	
 }
