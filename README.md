@@ -1,5 +1,7 @@
 # tcpmock
 
+Use Main class to execute following functions:
+
 ## RECORDING
 
 ```
@@ -7,16 +9,16 @@ NAME
 	record - Starts server and record communication.
 
 SYNOPSYS
-	record [--server-port] int  [[--client-address] string]  [--client-port] int  [--file-name] string  [--detached]  
+	record [--server-port] int  [--client-address] string  [--client-port] int  [--file-name] string
 
 OPTIONS
 	--server-port  int
-		
+	
 		[Mandatory]
 
 	--client-address  string
 		
-		[Optional, default = localhost]
+		[Mandatory]
 
 	--client-port  int
 		
@@ -26,9 +28,7 @@ OPTIONS
 		
 		[Mandatory]
 		[must not be empty]
-
-	--detached	
-		[Optional, default = false]
+		
 ```
 
 
@@ -39,7 +39,7 @@ NAME
 	playback - Starts server and replay specified communication file.
 
 SYNOPSYS
-	playback [--server-port] int  [--file-name] string  [--detached]  
+	playback [--server-port] int  [--file-name] string
 
 OPTIONS
 	--server-port  int
@@ -50,8 +50,7 @@ OPTIONS
 		
 		[Mandatory]
 		[must not be empty]
+		[File must be in classpath]
 
-	--detached	
-		[Optional, default = false]
 ```
 
