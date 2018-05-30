@@ -3,7 +3,7 @@
 ## User Manual
 Use com.inovarie.tcpmock.Main class to execute following functions:
 
-### RECORDING
+#### RECORDING
 
 ```
 NAME
@@ -14,26 +14,21 @@ SYNOPSYS
 
 OPTIONS
 	--server-port  int
-	
 		[Mandatory]
 
 	--client-address  string
-		
 		[Mandatory]
 
 	--client-port  int
-		
 		[Mandatory]
 
-	--file-name  string
-		
+	--file-name  string	
 		[Mandatory]
 		[must not be empty]
-		
 ```
 
 
-### PLAYBACK
+#### PLAYBACK
 
 ```
 NAME
@@ -44,15 +39,12 @@ SYNOPSYS
 
 OPTIONS
 	--server-port  int
-		
 		[Mandatory]
 
 	--file-name  string
-		
 		[Mandatory]
 		[must not be empty]
 		[File must be in classpath]
-
 ```
 
 ## TO-DO
