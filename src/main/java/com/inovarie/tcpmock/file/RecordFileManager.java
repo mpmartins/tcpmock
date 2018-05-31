@@ -1,46 +1,44 @@
 package com.inovarie.tcpmock.file;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.URL;
+import java.io.Writer;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.inovarie.tcpmock.model.Record;
 
 public class RecordFileManager {
 
-	private static final String FILE_EXTENSION = ".record";
+	private static final String FILE_EXTENSION = ".json";
 
-	public static Record loadRecord(String name) {
+	public static Record loadRecord(String filename) {
+		Gson gson = new GsonBuilder().create();
+		
 		Record record = null;
-		try {
-			URL file = Thread.currentThread().getContextClassLoader().getResource(name + FILE_EXTENSION);
-			FileInputStream fin = new FileInputStream(new File(file.getFile()));
-			ObjectInputStream ois = new ObjectInputStream(fin);
-			record = (Record) ois.readObject();
-			ois.close();
-			fin.close();
-		} catch (IOException e) {
+		try (JsonReader reader = new JsonReader(new FileReader(filename + FILE_EXTENSION))) {
+			record = gson.fromJson(reader, Record.class);
+			reader.close();
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return record;
 	}
 	
 	public static void saveRecord(Record record) {
-		try {
-			FileOutputStream fout = new FileOutputStream(record.getName() + FILE_EXTENSION);
-			ObjectOutputStream oos = new ObjectOutputStream(fout);
-			oos.writeObject(record);
-			oos.close();
-			fout.close();
+	    Gson gson = new GsonBuilder().create();
+		
+	    try (Writer writer = new FileWriter(record.getName() + FILE_EXTENSION)) {
+		    gson.toJson(record, writer);
+		    writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 	
 }
