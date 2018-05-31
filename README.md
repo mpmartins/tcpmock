@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mariopmartins/tcpmock.svg?branch=master)](https://travis-ci.org/mariopmartins/tcpmock) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) [![HitCount](http://hits.dwyl.com/mariopmartins/tcpmock.svg)](http://hits.dwyl.com/mariopmartins/tcpmock)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) [![Build Status](https://travis-ci.org/mariopmartins/tcpmock.svg?branch=master)](https://travis-ci.org/mariopmartins/tcpmock) [![codecov](https://codecov.io/gh/mariopmartins/tcpmock/branch/master/graph/badge.svg)](https://codecov.io/gh/mariopmartins/tcpmock) [![HitCount](http://hits.dwyl.com/mariopmartins/tcpmock.svg)](http://hits.dwyl.com/mariopmartins/tcpmock)
 
 # tcpmock
 
