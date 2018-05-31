@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mariopmartins/tcpmock.svg?branch=master)](https://travis-ci.org/mariopmartins/tcpmock)
+[![Build Status](https://travis-ci.org/mariopmartins/tcpmock.svg?branch=master)](https://travis-ci.org/mariopmartins/tcpmock)[![HitCount](http://hits.dwyl.com/mariopmartins/tcpmock.svg)](http://hits.dwyl.com/mariopmartins/tcpmock)
 
 # tcpmock
 
