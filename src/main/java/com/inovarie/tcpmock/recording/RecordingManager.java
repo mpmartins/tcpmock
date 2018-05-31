@@ -3,8 +3,6 @@ package com.inovarie.tcpmock.recording;
 import com.inovarie.tcpmock.model.Connection;
 import com.inovarie.tcpmock.model.Record;
 
-import lombok.NonNull;
-
 public class RecordingManager {
 
 	private RecordingManagerStatus status = RecordingManagerStatus.PENDING;
@@ -12,11 +10,11 @@ public class RecordingManager {
 	
 	private static RecordingManager instance = null;
 	
-	private RecordingManager(@NonNull Record record) {
+	private RecordingManager(Record record) {
 		this.record = record;
 	}
 	
-	public static RecordingManager getInstance(@NonNull Record record) {
+	public static RecordingManager getInstance(Record record) {
 		if (instance == null) {
 			instance = new RecordingManager(record);
 		}

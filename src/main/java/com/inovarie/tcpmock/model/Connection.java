@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.NonNull;
-
-@Data
 public class Connection implements Serializable {
 	
 	private static final long serialVersionUID = 5529731646617697L;
@@ -29,7 +25,7 @@ public class Connection implements Serializable {
 		currentBytes = new ArrayList<>();
 	}
 	
-	public synchronized void write(@NonNull Source s, int b) { 
+	public synchronized void write(Source s, int b) { 
 		if (s == currentSource) {
 			currentBytes.add(b);
 		} else {
@@ -41,4 +37,14 @@ public class Connection implements Serializable {
 			currentBytes.add(b);
 		}
 	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	@Override
+	public String toString() {
+		return "Connection [messages=" + messages + "]";
+	}
+
 }

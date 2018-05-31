@@ -5,12 +5,10 @@ import java.util.Scanner;
 import com.inovarie.tcpmock.file.RecordFileManager;
 import com.inovarie.tcpmock.model.Record;
 
-import lombok.NonNull;
-
 public class RecordingService {
 
-	public void startRecording(int serverPort, @NonNull String clientAddress, int clientPort,
-			@NonNull String fileName) {
+	public void startRecording(int serverPort, String clientAddress, int clientPort,
+			String fileName) {
 		
 		Record record = new Record(fileName);
 		

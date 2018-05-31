@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.NonNull;
-
-@Data
 public class Record implements Serializable {
 
 	private static final long serialVersionUID = -1638436672550721377L;
@@ -15,7 +11,7 @@ public class Record implements Serializable {
 	private String name;
 	private List<Connection> connections;
 
-	public Record(@NonNull String name) {
+	public Record(String name) {
 		this.name = name;
 		connections =  new ArrayList<>();
 	}
@@ -25,4 +21,18 @@ public class Record implements Serializable {
 		connections.add(connection);
 		return connection;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public List<Connection> getConnections() {
+		return connections;
+	}
+
+	@Override
+	public String toString() {
+		return "Record [name=" + name + ", connections=" + connections + "]";
+	}
+
 }
