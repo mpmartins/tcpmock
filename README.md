@@ -1,6 +1,8 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mariopmartins/tcpmock/issues) [![Build Status](https://travis-ci.org/mariopmartins/tcpmock.svg?branch=master)](https://travis-ci.org/mariopmartins/tcpmock) [![codecov](https://codecov.io/gh/mariopmartins/tcpmock/branch/master/graph/badge.svg)](https://codecov.io/gh/mariopmartins/tcpmock) [![HitCount](http://hits.dwyl.com/mariopmartins/tcpmock.svg)](http://hits.dwyl.com/mariopmartins/tcpmock)
 
 # tcpmock
+A simple tool that allows you to record communication between your application and any TCP server.
+Iteractions can be saved to a file and played back, creating a mock version of that TCP server.
 
 ## User Manual
 Use com.inovarie.tcpmock.Main class to execute following functions:
