@@ -1,5 +1,9 @@
 language: java
 
+install:
+  # https://github.com/travis-ci/travis-ci/issues/8408
+  - unset _JAVA_OPTIONS
+  
 script: "mvn cobertura:cobertura"
 
 after_success:
