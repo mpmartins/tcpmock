@@ -4,49 +4,51 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ForkJoinPool;
 
 public class RecordingServer implements Runnable {
 
-	private PrintStream output;
-	private RecordingManager recordManager;
-	private int serverPort;
-	private String clientAddress;
-	private int clientPort;
+	private final PrintStream output;
+	private final RecordingManager recordManager;
+	private final int serverPort;
+	private final String clientAddress;
+	private final int clientPort;
+	private final ForkJoinPool forkJoinPool;
 	
-	public RecordingServer(PrintStream output, RecordingManager recordManager, int serverPort, String clientAddress, int clientPort) {
+	public RecordingServer(
+	        ForkJoinPool forkJoinPool,
+	        PrintStream output,
+            RecordingManager recordManager,
+            int serverPort,
+            String clientAddress,
+            int clientPort) {
 		this.output = output;
 		this.recordManager = recordManager;
 		this.serverPort = serverPort;
 		this.clientAddress = clientAddress;
 		this.clientPort = clientPort;
+		this.forkJoinPool = forkJoinPool;
 	}
 
-
 	public void run() {
-		ServerSocket serverSocket = null;
-		try {
-			
-			serverSocket = new ServerSocket(serverPort);
+		try (ServerSocket serverSocket = new ServerSocket(serverPort)) {
 			output.println("RecordingServer is starting on port " + serverPort + " ...");
-
 			while (RecordingManagerStatus.RECORDING == recordManager.getStatus()) {
 				Socket serverConnectionSocket = serverSocket.accept();
-				output.println("Accepting Connection...");
-				
-				new RecordingHandler(output, recordManager, serverConnectionSocket, clientAddress, clientPort).start();
-			}
 
-			
+				output.println("Accepting Connection...");
+				forkJoinPool.execute(new RecordingHandler(
+				        forkJoinPool,
+                        output,
+                        recordManager,
+                        serverConnectionSocket,
+                        clientAddress,
+                        clientPort));
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				serverSocket.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 			output.println("The server is shut down!");
 		}
 	}
-
 }

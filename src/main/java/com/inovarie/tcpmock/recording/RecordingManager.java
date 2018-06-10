@@ -3,28 +3,29 @@ package com.inovarie.tcpmock.recording;
 import com.inovarie.tcpmock.model.Connection;
 import com.inovarie.tcpmock.model.Record;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class RecordingManager {
 
-	private RecordingManagerStatus status = RecordingManagerStatus.PENDING;
+	private RecordingManagerStatus status;
 	private Record record;
-	
-	private static RecordingManager instance = null;
-	
-	private RecordingManager(Record record) {
-		this.record = record;
-	}
-	
-	public static RecordingManager getInstance(Record record) {
-		if (instance == null) {
-			instance = new RecordingManager(record);
-		}
-		return instance;
+
+	public RecordingManager() {
+	    status = RecordingManagerStatus.PENDING;
+
 	}
 
-	public synchronized void startRecord() {
+	//TODO: Deal with this synchronized
+	public synchronized void startRecord(Record record) {
 		status = RecordingManagerStatus.RECORDING;
+		setRecord(record);
 	}
-	
+
+	private void setRecord(Record record) {
+		this.record = record;
+	}
+
 	public void stopRecord() {
 		for (Connection connection : record.getConnections()) {
 			connection.endConnection();

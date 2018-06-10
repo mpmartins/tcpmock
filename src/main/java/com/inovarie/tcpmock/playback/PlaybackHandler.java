@@ -1,5 +1,8 @@
 package com.inovarie.tcpmock.playback;
 
+import com.inovarie.tcpmock.model.Connection;
+import com.inovarie.tcpmock.model.Message;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,10 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inovarie.tcpmock.model.Connection;
-import com.inovarie.tcpmock.model.Message;
-
-public class PlaybackHandler extends Thread {
+public class PlaybackHandler implements Runnable {
 
 	Socket serverConnectionSocket;
 	Connection connection;
@@ -55,9 +55,6 @@ public class PlaybackHandler extends Thread {
 				
 				System.out.println();
 			}
-			
-			
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

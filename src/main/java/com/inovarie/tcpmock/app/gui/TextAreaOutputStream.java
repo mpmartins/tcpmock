@@ -1,9 +1,7 @@
-package com.inovarie.tcpmock.app;
-
-import java.io.IOException;
-import java.io.OutputStream;
+package com.inovarie.tcpmock.app.gui;
 
 import javax.swing.JTextArea;
+import java.io.OutputStream;
 
 public class TextAreaOutputStream extends OutputStream {
     private JTextArea textArea;
@@ -13,7 +11,7 @@ public class TextAreaOutputStream extends OutputStream {
     }
      
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b) {
         // redirects data to the text area
         textArea.append(String.valueOf((char)b));
         if (b == '\n') {
