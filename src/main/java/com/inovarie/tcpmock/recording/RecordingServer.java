@@ -1,17 +1,20 @@
 package com.inovarie.tcpmock.recording;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class RecordingServer implements Runnable {
 
+	private PrintStream output;
 	private RecordingManager recordManager;
 	private int serverPort;
 	private String clientAddress;
 	private int clientPort;
-
-	public RecordingServer(RecordingManager recordManager, int serverPort, String clientAddress, int clientPort) {
+	
+	public RecordingServer(PrintStream output, RecordingManager recordManager, int serverPort, String clientAddress, int clientPort) {
+		this.output = output;
 		this.recordManager = recordManager;
 		this.serverPort = serverPort;
 		this.clientAddress = clientAddress;
@@ -24,13 +27,13 @@ public class RecordingServer implements Runnable {
 		try {
 			
 			serverSocket = new ServerSocket(serverPort);
-			System.out.println("RecordingServer is starting on port " + serverPort + " ...");
+			output.println("RecordingServer is starting on port " + serverPort + " ...");
 
 			while (RecordingManagerStatus.RECORDING == recordManager.getStatus()) {
 				Socket serverConnectionSocket = serverSocket.accept();
-				System.out.println("Accepting Connection...");
+				output.println("Accepting Connection...");
 				
-				new RecordingHandler(recordManager, serverConnectionSocket, clientAddress, clientPort).start();
+				new RecordingHandler(output, recordManager, serverConnectionSocket, clientAddress, clientPort).start();
 			}
 
 			
@@ -42,7 +45,7 @@ public class RecordingServer implements Runnable {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("The server is shut down!");
+			output.println("The server is shut down!");
 		}
 	}
 

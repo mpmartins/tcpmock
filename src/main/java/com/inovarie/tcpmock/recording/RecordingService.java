@@ -15,7 +15,7 @@ public class RecordingService {
 		RecordingManager recordManager = RecordingManager.getInstance(record);
 		recordManager.startRecord();
 
-		new Thread(new RecordingServer(recordManager, serverPort, clientAddress, clientPort)).start();
+		new Thread(new RecordingServer(System.out, recordManager, serverPort, clientAddress, clientPort)).start();
 
 		Scanner userInputScanner = new Scanner(System.in);
 		System.out.println("Press any key to stop recording...");

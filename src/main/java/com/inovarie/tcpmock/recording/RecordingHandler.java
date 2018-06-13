@@ -1,6 +1,7 @@
 package com.inovarie.tcpmock.recording;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 
 import com.inovarie.tcpmock.model.Connection;
@@ -8,12 +9,14 @@ import com.inovarie.tcpmock.model.Source;
 
 public class RecordingHandler extends Thread {
 
+	private PrintStream output;
 	private RecordingManager recordingManager;
 	private Socket serverConnectionSocket;
 	private String clientAddress;
 	private int clientPort;
 
-	public RecordingHandler(RecordingManager recordingManager, Socket serverConnectionSocket, String clientAddress, int clientPort) {
+	public RecordingHandler(PrintStream output, RecordingManager recordingManager, Socket serverConnectionSocket, String clientAddress, int clientPort) {
+		this.output = output;
 		this.recordingManager = recordingManager;
 		this.serverConnectionSocket = serverConnectionSocket;
 		this.clientAddress = clientAddress;
@@ -25,7 +28,7 @@ public class RecordingHandler extends Thread {
 			
 			Connection connection = recordingManager.startConnection();
 
-			System.out.println("Establishing client connection...");
+			output.println("Establishing client connection with client ("+clientAddress+":"+clientPort+") ...");
 			Socket clientConnectionSocket = new Socket(clientAddress, clientPort);
 			
 			Thread clientToServer = new Thread(new CommunicationMonitor(

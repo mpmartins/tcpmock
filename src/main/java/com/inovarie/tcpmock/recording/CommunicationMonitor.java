@@ -27,7 +27,6 @@ public class CommunicationMonitor implements Runnable {
 			while (connected) {
 				int input = in.read();
 
-				System.out.print(input);
 				connection.write(source, input);
 				out.write(input);
 
