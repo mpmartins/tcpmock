@@ -11,7 +11,7 @@ public class Connection implements Serializable {
 	private transient Source currentSource;
 	private transient List<Integer> currentBytes;
 	
-	private List<Message> messages;
+	private final List<Message> messages;
 
 	public Connection() {
 		messages = new ArrayList<>();
@@ -22,7 +22,7 @@ public class Connection implements Serializable {
 			messages.add(new Message(currentSource, currentBytes));
 		}
 		currentSource = null;
-		currentBytes = new ArrayList<>();
+		currentBytes.clear();
 	}
 	
 	public synchronized void write(Source s, int b) { 

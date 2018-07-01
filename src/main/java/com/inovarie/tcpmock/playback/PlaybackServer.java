@@ -4,18 +4,21 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import com.inovarie.tcpmock.model.Connection;
 import com.inovarie.tcpmock.model.Record;
 
 public class PlaybackServer implements Runnable {
 
-	private int serverPort;
-	private Record record;
+	private final int serverPort;
+	private final Record record;
+	private final Executor executor;
 
-	public PlaybackServer(int serverPort, Record record) {
+	public PlaybackServer(Executor executor, int serverPort, Record record) {
 		this.serverPort = serverPort;
 		this.record = record;
+		this.executor = executor;
 	}
 
 	public void run() {
@@ -29,9 +32,9 @@ public class PlaybackServer implements Runnable {
 
 			for (Connection connection : connections) {
 				Socket serverConnectionSocket = serverSocket.accept();
-				System.out.println("Accepting Connection...");
 
-				new PlaybackHandler(serverConnectionSocket, connection).start();
+				System.out.println("Accepting Connection...");
+				executor.execute(new PlaybackHandler(serverConnectionSocket, connection));
 			}
 
 		} catch (IOException e) {
