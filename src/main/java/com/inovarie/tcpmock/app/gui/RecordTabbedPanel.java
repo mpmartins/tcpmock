@@ -22,6 +22,7 @@ import java.io.PrintStream;
  * Recording panel.
  * No business rule here.
  */
+@SuppressWarnings("serial")
 @org.springframework.stereotype.Component
 public class RecordTabbedPanel extends JPanel {
 
