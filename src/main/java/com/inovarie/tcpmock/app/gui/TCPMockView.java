@@ -25,14 +25,14 @@ public class TCPMockView extends JFrame {
     private Container mainPanel;
 
     private final RecordTabbedPanel recordTabbedPanel;
+    private final PlaybackTabbedPanel playbackTabbedPanel;
 
     private JTabbedPane mainTabbedPanel;
 
-    private JComponent playTabbedPanel;
-
     @Inject
-    public TCPMockView(RecordTabbedPanel recordTabbedPanel) {
+    public TCPMockView(RecordTabbedPanel recordTabbedPanel, PlaybackTabbedPanel playbackTabbedPanel) {
         this.recordTabbedPanel = recordTabbedPanel;
+        this.playbackTabbedPanel = playbackTabbedPanel;
     }
 
     public void init() {
@@ -53,22 +53,11 @@ public class TCPMockView extends JFrame {
             mainTabbedPanel = new JTabbedPane();
             recordTabbedPanel.initComponents(WINDOW_SIZE);
             mainTabbedPanel.addTab(RECORDING_STR, recordTabbedPanel);
-            mainTabbedPanel.addTab(PLAYBACK_STR, getPlayTabbedPanel());
+            playbackTabbedPanel.initComponents(WINDOW_SIZE);
+            mainTabbedPanel.addTab(PLAYBACK_STR, playbackTabbedPanel);
 
         }
         return mainTabbedPanel;
-    }
-
-    private JComponent getPlayTabbedPanel() {
-        if (playTabbedPanel == null) {
-            playTabbedPanel = new JPanel();
-            playTabbedPanel.setLayout(new BoxLayout(playTabbedPanel, BoxLayout.PAGE_AXIS));
-            playTabbedPanel.setPreferredSize(WINDOW_SIZE);
-            playTabbedPanel.add(Box.createRigidArea(GuiConstants.VERTICAL_SPACE_5_PX));
-            playTabbedPanel.add(Box.createRigidArea(GuiConstants.VERTICAL_SPACE_5_PX));
-            playTabbedPanel.add(Box.createRigidArea(GuiConstants.VERTICAL_SPACE_5_PX));
-        }
-        return playTabbedPanel;
     }
 
     private Container getMainPanel() {
@@ -87,5 +76,10 @@ public class TCPMockView extends JFrame {
     protected void recordStopped() {
         recordTabbedPanel.recordStopped();
     }
+
+    protected void playbackStarted() { playbackTabbedPanel.playbackStarted();  }
+
+    protected void playbackStopped() { playbackTabbedPanel.playbackStopped();  }
+
 }
 

@@ -14,4 +14,14 @@ public interface TCPMockModelObserver {
      * Notify observers the recording process just stopped.
      */
     void recordStopped();
+
+    /**
+     * Notify observers the playback process just started.
+     */
+    void playbackStarted();
+
+    /**
+     * Notify observers the playback process just stopped.
+     */
+    void playbackStopped();
 }

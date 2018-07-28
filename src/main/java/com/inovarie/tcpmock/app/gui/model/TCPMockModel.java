@@ -3,12 +3,14 @@ package com.inovarie.tcpmock.app.gui.model;
 import com.inovarie.tcpmock.app.gui.TCPMockModelObserver;
 import com.inovarie.tcpmock.file.RecordFileManager;
 import com.inovarie.tcpmock.model.Record;
+import com.inovarie.tcpmock.playback.PlaybackServer;
 import com.inovarie.tcpmock.recording.RecordingManager;
 import com.inovarie.tcpmock.recording.RecordingServer;
 
 import javax.inject.Inject;
 import java.io.PrintStream;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 
 import org.springframework.stereotype.Component;
@@ -26,6 +28,7 @@ public class TCPMockModel {
     private final ForkJoinPool forkJoinPool;
 
     private boolean isRecording;
+    private boolean isPlaying;
 
     @Inject
     public TCPMockModel(RecordingManager recordingManager,
@@ -87,4 +90,33 @@ public class TCPMockModel {
         recordingManager.stopRecord();
         recordFileManager.saveRecord(recordingManager.getRecord());
     }
+
+    public void processPlaybackButton(PrintStream output, String fileName, int serverPort) {
+        if (!isPlaying()) {
+            tcpMockModelObserver.playbackStarted();
+            startPlaying(output, fileName, serverPort);
+        } else {
+            tcpMockModelObserver.playbackStopped();
+            stopPlaying();
+        }
+        setPlaying(!isPlaying());
+    }
+
+    private void stopPlaying() {
+        //FIXME: think of a way to abruptly stop the server.
+    }
+
+    private void startPlaying(PrintStream output, String fileName, int serverPort) {
+        Record record = recordFileManager.loadRecord(fileName);
+        executor.execute(new PlaybackServer(executor, serverPort, record));
+    }
+
+    private boolean isPlaying() {
+        return isPlaying;
+    }
+
+    private void setPlaying(boolean playing) {
+        isPlaying = playing;
+    }
+
 }

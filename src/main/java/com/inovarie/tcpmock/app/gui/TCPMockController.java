@@ -38,6 +38,10 @@ public class TCPMockController implements TCPMockModelObserver {
         getTcpMockModel().processRecordingButton(output, fileName, clientAddress, serverPort, clientPort);
     }
 
+    public void processPlaybackButton(PrintStream output, String fileName, int serverPort) {
+        getTcpMockModel().processPlaybackButton(output, fileName, serverPort);
+    }
+
     @NonNull
     public TCPMockModel getTcpMockModel() {
         return tcpMockModel;
@@ -65,4 +69,16 @@ public class TCPMockController implements TCPMockModelObserver {
     public void recordStopped() {
         getTcpMockView().recordStopped();
     }
+
+    @Override
+    public void playbackStarted() {
+        getTcpMockView().playbackStarted();
+    }
+
+    @Override
+    public void playbackStopped() {
+        getTcpMockView().playbackStopped();
+    }
+
+
 }
